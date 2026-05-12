@@ -1,0 +1,54 @@
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.book-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column; 
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%; 
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.book-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover; 
+  border-bottom: 1px solid var(--border);
+}
+
+.book-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-actions {
+  margin-top: auto;
+  padding: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
