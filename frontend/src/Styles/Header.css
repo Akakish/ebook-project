@@ -18,7 +18,6 @@ header > div {
   gap: 2rem;
 }
 
-/* Логотип */
 header > div > div:first-child {
   display: flex;
   align-items: center;
@@ -37,7 +36,6 @@ header > div > div:first-child:hover {
   color: var(--accent);
 }
 
-/* Навигация */
 nav {
   display: flex;
   gap: 0.5rem;
@@ -45,7 +43,6 @@ nav {
   margin: 0 auto;
 }
 
-/* Ссылки навигации */
 .nav-btn {
   display: flex;
   align-items: center;
@@ -72,7 +69,6 @@ nav {
   font-weight: 600;
 }
 
-/* Правая часть — кнопки профиля и выхода */
 header > div > div:last-child {
   display: flex;
   align-items: center;
@@ -103,7 +99,6 @@ header > div > div:last-child button:hover {
   transform: translateY(-2px);
 }
 
-/* Кнопка Sign in / Logout */
 header > div > div:last-child .sign-btn {
   background: var(--primary);
   color: white;
@@ -115,7 +110,6 @@ header > div > div:last-child .sign-btn:hover {
   border-color: var(--accent);
 }
 
-/* Иконки */
 .nav-icon {
   width: 20px;
   height: 20px;

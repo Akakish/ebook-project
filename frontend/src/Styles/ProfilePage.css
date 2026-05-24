@@ -201,7 +201,6 @@
     grid-template-columns: 1fr;
   }
 }
-/* Иконка + текст в кнопках */
 .profile-btn {
   display: flex;
   align-items: center;

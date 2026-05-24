@@ -1,8 +1,3 @@
-/* ============================================
-   Модальные окна — базовые стили
-   ============================================ */
-
-/* Затемнение фона */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -14,7 +9,6 @@
   animation: fadeIn 0.2s ease;
 }
 
-/* Контейнер окна */
 .modal-content {
   background: white;
   border-radius: 12px;
@@ -27,12 +21,10 @@
   animation: slideUp 0.25s ease;
 }
 
-/* Расширенный вариант для форм с большим числом полей */
 .modal-content.modal-wide {
   max-width: 640px;
 }
 
-/* Шапка */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -48,7 +40,6 @@
   color: var(--text);
 }
 
-/* Кнопка закрытия × */
 .modal-close {
   background: none;
   border: none;
@@ -71,14 +62,12 @@
   background-color: var(--bg);
 }
 
-/* Тело */
 .modal-body {
   margin-bottom: 1.5rem;
   color: var(--text);
   line-height: 1.6;
 }
 
-/* Подвал с кнопками */
 .modal-footer {
   display: flex;
   gap: 0.75rem;
@@ -87,9 +76,6 @@
   border-top: 1px solid var(--border);
 }
 
-/* ============================================
-   Кнопки модальных окон
-   ============================================ */
 
 .modal-btn {
   padding: 0.65rem 1.4rem;
@@ -140,9 +126,6 @@
   box-shadow: var(--shadow-hover);
 }
 
-/* ============================================
-   Форма внутри модального окна
-   ============================================ */
 
 .modal-form {
   display: flex;
@@ -150,7 +133,6 @@
   gap: 1rem;
 }
 
-/* Одно поле */
 .modal-form-group {
   display: flex;
   flex-direction: column;
@@ -191,14 +173,12 @@
   min-height: 90px;
 }
 
-/* Два поля в ряд */
 .modal-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
 }
 
-/* Загрузка файла */
 .modal-file-input {
   padding: 0.5rem 0;
   font-size: 0.9rem;
@@ -206,7 +186,6 @@
   cursor: pointer;
 }
 
-/* Сообщение об ошибке */
 .modal-error {
   background-color: #fef2f2;
   border: 1px solid #fecaca;
@@ -216,9 +195,7 @@
   font-size: 0.9rem;
 }
 
-/* ============================================
-   ConfirmModal — подтверждение действий
-   ============================================ */
+
 
 .confirm-modal .modal-content {
   max-width: 380px;
@@ -249,9 +226,6 @@
   justify-content: center;
 }
 
-/* ============================================
-   Анимации
-   ============================================ */
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -263,9 +237,6 @@
   to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* ============================================
-   Адаптив
-   ============================================ */
 
 @media (max-width: 600px) {
   .modal-content {

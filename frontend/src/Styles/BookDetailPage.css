@@ -198,7 +198,9 @@
     min-width: auto;
   }
 }
-/* ── Кнопка закладки ─────────────────────────── */
+
+
+
 .book-detail-title-row {
   display: flex;
   align-items: flex-start;
@@ -218,7 +220,7 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  margin-top: 4px;          /* выравнивание с заголовком */
+  margin-top: 4px; 
   background: none;
   border: 2px solid var(--border);
   border-radius: 10px;

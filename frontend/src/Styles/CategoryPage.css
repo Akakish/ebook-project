@@ -38,7 +38,8 @@
   font-weight: 600;
 }
 
-/* Список категорий */
+
+
 .categories-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -240,7 +241,7 @@
   }
 }
 
-/* Шапка с кнопкой */
+
 .category-header-row {
   display: flex;
   align-items: center;
@@ -275,7 +276,7 @@
   box-shadow: var(--shadow-hover);
 }
 
-/* Кнопки редактирования/удаления на карточке */
+
 .category-item {
   position: relative;
 }
