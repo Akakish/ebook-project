@@ -1,105 +1,159 @@
 header {
-  background-color: #f5f6ed;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 0.85rem 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background-color: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow);
   position: sticky;
   top: 0;
   z-index: 100;
+  font-family: 'DM Sans', sans-serif;
 }
 
 header > div {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 /* Логотип */
 header > div > div:first-child {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
+  gap: 0.75rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #2d2d2d;
+  color: var(--primary);
   cursor: pointer;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.5px;
   user-select: none;
+  font-family: 'Playfair Display', serif;
+  transition: color 0.3s ease;
+}
+
+header > div > div:first-child:hover {
+  color: var(--accent);
 }
 
 /* Навигация */
 nav {
   display: flex;
-  gap: 4px;
+  gap: 0.5rem;
   align-items: center;
+  margin: 0 auto;
 }
 
 /* Ссылки навигации */
 .nav-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 0.45rem 0.85rem;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  color: #555;
-  text-decoration: none;        /* убираем подчёркивание */
-  transition: background 0.15s ease, color 0.15s ease;
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.3s ease;
   white-space: nowrap;
+  border: 1px solid transparent;
 }
 
 .nav-btn:hover {
-  background: rgba(0, 0, 0, 0.06);
-  color: #222;
-  text-decoration: none;        /* убираем подчёркивание при hover */
+  background-color: rgba(139, 115, 85, 0.1);
+  color: var(--primary);
 }
 
 .nav-btn.active {
-  background: rgba(0, 0, 0, 0.09);
-  color: #111;
+  background-color: var(--primary);
+  color: white;
   font-weight: 600;
-  text-decoration: none;
 }
 
 /* Правая часть — кнопки профиля и выхода */
 header > div > div:last-child {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.75rem;
+  margin-left: auto;
 }
 
 header > div > div:last-child button {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 0.45rem 0.9rem;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
   border-radius: 8px;
-  border: 1px solid transparent;
-  font-size: 0.875rem;
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-  background: transparent;
-  color: #444;
+  transition: all 0.3s ease;
+  background: white;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
 }
 
 header > div > div:last-child button:hover {
-  background: rgba(0, 0, 0, 0.06);
-  color: #111;
-}
-
-/* Кнопка Sign in */
-header > div > div:last-child button:only-child {
-  background: #2d2d2d;
+  background-color: var(--accent);
   color: white;
-  border-color: #2d2d2d;
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }
 
-header > div > div:last-child button:only-child:hover {
-  background: #111;
-  border-color: #111;
+/* Кнопка Sign in / Logout */
+header > div > div:last-child .sign-btn {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+header > div > div:last-child .sign-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Иконки */
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  header {
+    padding: 0.75rem 1rem;
+  }
+  
+  header > div {
+    gap: 1rem;
+  }
+  
+  header > div > div:first-child {
+    font-size: 1.1rem;
+  }
+  
+  nav {
+    gap: 0.25rem;
+    order: 3;
+    flex-basis: 100%;
+  }
+  
+  .nav-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  header > div > div:last-child {
+    gap: 0.5rem;
+  }
+  
+  header > div > div:last-child button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
 }

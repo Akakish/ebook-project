@@ -16,14 +16,16 @@ export default function BookCard({ book, onDelete, onEdit }) {
         alt={book.title}
         onError={(e) => { e.target.src = "https://img.wattpad.com/cover/387707177-512-k61057.jpg"; }}
       />
-      <h3>{book.title}</h3>
-      <p>{book.author}</p>
-      <p>{book.genres}</p>
+      <div className="book-card-content">
+        <h3>{book.title}</h3>
+        <p>{book.author}</p>
+        <div className="book-rating">{book.category.name || "Другое"}</div>
+      </div>
 
       {(onEdit || onDelete) && (
-        <div onClick={(e) => e.stopPropagation()}>
-          {onEdit && <button className="btn" onClick={() => onEdit(book)}><IconEdit /></button>}
-          {onDelete && <button className="btn" onClick={() => onDelete(book.book_id)}><IconTrash /></button>}
+        <div className="card-actions" onClick={(e) => e.stopPropagation()}>
+          {onEdit && <button className="btn-edit" onClick={() => onEdit(book)}><IconEdit /></button>}
+          {onDelete && <button className="btn-delete" onClick={() => onDelete(book.book_id)}><IconTrash /></button>}
         </div>
       )}
     </div>

@@ -22,7 +22,10 @@ export default function BookDetailPage() {
 
   useEffect(() => {
     fetchBook();
-  }, [id]);
+    if (user) {
+      checkBookmark();
+    }
+  }, [id, user]);
 
   const fetchBook = async () => {
     setLoading(true);
@@ -33,6 +36,41 @@ export default function BookDetailPage() {
       setError("Failed to load book details");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const checkBookmark = async () => {
+    if (!user) return;
+    try {
+      const { data } = await getBookmarks();
+      const found = data.find(b => b.book === id && b.user === user.id);
+      setBookmark(found || null);
+    } catch (err) {
+      console.error("Failed to check bookmark");
+    }
+  };
+
+  const handleBookmark = async () => {
+    if (!user) {
+      notify.error("Please log in first");
+      return;
+    }
+    
+    setBookmarkLoading(true);
+    try {
+      if (bookmark) {
+        await deleteBookmark(bookmark.Bookmark_id);
+        setBookmark(null);
+        notify.success("Removed from bookmarks");
+      } else {
+        await createBookmark(user.id, id, "reading");
+        await checkBookmark();
+        notify.success("Added to bookmarks!");
+      }
+    } catch (err) {
+      notify.error("Failed to update bookmark");
+    } finally {
+      setBookmarkLoading(false);
     }
   };
 
@@ -51,7 +89,18 @@ export default function BookDetailPage() {
         />
         
         <div className="book-detail-info">
-          <h1>{book.title}</h1>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+            <h1 style={{ margin: 0 }}>{book.title}</h1>
+            <button 
+              className="bookmark-heart"
+              onClick={handleBookmark}
+              disabled={bookmarkLoading}
+              style={{ fontSize: "2rem", cursor: "pointer", background: "none", border: "none" }}
+              title={bookmark ? "Remove from bookmarks" : "Add to bookmarks"}
+            >
+              {bookmark ? "❤️" : "🤍"}
+            </button>
+          </div>
           <p><strong>Author:</strong> {book.author}</p>
           <p><strong>Genres:</strong> {book.genres}</p>
           <p><strong>Published Date:</strong> {book.published_date}</p>

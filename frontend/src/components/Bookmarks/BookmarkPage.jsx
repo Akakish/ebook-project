@@ -64,31 +64,57 @@ function BookmarksPage() {
   const getBook = (id) => books.find(b => b.book_id === id);
 
   return (
-    <div>
-      <div>
-        <h1>My Shelf</h1>
-        <p>{bookmarks.length} bookmarked books</p>
-        <button onClick={() => setShowModal(true)}>
-          <IconPlus /> Add bookmark
-        </button>
-      </div>
+    <div className="bookmark-page">
+      <div className="bookmark-container">
+        <div className="bookmark-header">
+          <h1>My Shelf</h1>
+          <p className="bookmark-count">{bookmarks.length} bookmarked books</p>
+        </div>
 
       {loading ? <div>Loading…</div> : bookmarks.length === 0 ? (
         <p>Your shelf is empty. Start bookmarking books!</p>
       ) : (
-        <div>
+        <div className="bookmark-list">
           {bookmarks.map(bm => {
             const book = getBook(bm.book);
             return (
               <div className="bookmark-item" key={bm.Bookmark_id}>
-                <div>{book?.title || "Unknown"}</div>
-                <div>{book?.author}</div>
-                <select value={bm.status} onChange={(e) => handleStatusChange(bm, e.target.value)}>
-                  {["read","planned","reading","completed","dropped","favorite"].map(s => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
-                </select>
-                <button onClick={() => handleDelete(bm.Bookmark_id)}><IconTrash /></button>
+                <img 
+                  className="bookmark-cover"
+                  src={book?.cover_image || "https://img.wattpad.com/cover/387707177-512-k61057.jpg"}
+                  alt={book?.title || "Unknown"}
+                  onError={(e) => { e.target.src = "https://img.wattpad.com/cover/387707177-512-k61057.jpg"; }}
+                />
+                <div className="bookmark-info">
+                  <h3>{book?.title || "Unknown"}</h3>
+                  <p className="bookmark-author">{book?.author}</p>
+                  <p className="bookmark-description">{book?.description}</p>
+                  <div className="bookmark-rating">{book?.rating || "N/A"} ⭐</div>
+                  <select 
+                    className="bookmark-status"
+                    value={bm.status} 
+                    onChange={(e) => handleStatusChange(bm, e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {["read","planned","reading","completed","dropped","favorite"].map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="bookmark-actions">
+                  <button 
+                    className="bookmark-action-btn view"
+                    onClick={() => navigate(`/book/${book?.book_id}`)}
+                  >
+                    👁️
+                  </button>
+                  <button 
+                    className="bookmark-action-btn remove"
+                    onClick={() => handleDelete(bm.Bookmark_id)}
+                  >
+                    🗑️
+                  </button>
+                </div>
               </div>
             );
           })}
@@ -103,6 +129,7 @@ function BookmarksPage() {
           onSaved={() => { refetch();}}
         />
       )}
+      </div>
     </div>
   );
 }

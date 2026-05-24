@@ -59,25 +59,39 @@ export default function BooksPage() {
   };
 
   return (
-    <>
-      <h2>Каталог книг</h2>
-
-      <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
-        <option value="">All categories</option>
-          {categories.map(cat => (
-        <option key={cat.id} value={cat.id}>{cat.name}</option>
-        ))}
-      </select>
-
-      {user?.role === "admin" && (
-        <div className="AdminPanel">
-          <button onClick={() => { setShowModal(true); setEditBook(null); }}>
-            Добавить книгу
+    <div className="books-page">
+      <div className="books-header">
+        <h1>Каталог книг</h1>
+        {user?.role === "admin" && (
+          <button className="add-book-btn" onClick={() => { setShowModal(true); setEditBook(null); }}>
+            + Добавить книгу
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
-      
+      <div className="books-container">
+        <div className="books-filters">
+          <div className="filter-group">
+            <label className="filter-label">Категория:</label>
+            <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)}>
+              <option value="">Все категории</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {loading && <p>Loading...</p>}
+        {!loading && (
+          <Catalog
+            books={filteredBooks}
+            onEdit={user?.role === "admin" ? onEdit : null}
+            onDelete={user?.role === "admin" ? onDelete : null}
+          />
+        )}
+      </div>
+
       {showModal && (
         <BooksModal
           onClose={() => { setShowModal(false); setEditBook(null); }}
@@ -88,15 +102,6 @@ export default function BooksPage() {
           }}
         />
       )}
-
-      {loading && <p>Loading...</p>}
-      {!loading && (
-        <Catalog
-          books={filteredBooks}
-          onEdit={user?.role === "admin" ? onEdit : null}
-          onDelete={user?.role === "admin" ? onDelete : null}
-        />
-      )}
-    </>
+    </div>
   );
 }
