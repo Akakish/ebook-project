@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../Redux/modalReducer.js";
+import "../Styles/Modal.css";
 
 export default function ConfirmModal() {
   const dispatch = useDispatch();
@@ -21,27 +22,18 @@ export default function ConfirmModal() {
   if (!isOpen) return null;
 
   return (
-    <div style={{
-      position: "fixed", inset: 0,
-      background: "rgba(0,0,0,0.5)",
-      display: "flex", 
-      alignItems: "center", 
-      justifyContent: "center",
-      zIndex: 10000,
-    }}>
-      <div style={{
-        background: "white", padding: "24px", borderRadius: "10px",
-        minWidth: "300px", textAlign: "center",
-      }}>
-        <p style={{ marginBottom: "20px", fontSize: "16px" }}>{message}</p>
-        <div style={{ display: "flex", gap: "12px", justifyContent: "center" }}>
-          <button onClick={handleCancel} style={{ padding: "8px 20px" }}>
-            Cancel
+    <div className="modal-overlay confirm-modal">
+      <div className="modal-content">
+        <div className="modal-body">
+          <span className="confirm-icon warning">⚠️</span>
+          <p className="confirm-message">{message}</p>
+        </div>
+        <div className="modal-footer">
+          <button className="modal-btn modal-btn-secondary" onClick={handleCancel}>
+            Отмена
           </button>
-          <button onClick={handleConfirm} style={{
-            padding: "8px 20px", background: "#f44336", color: "white", border: "none", borderRadius: "6px"
-          }}>
-            Confirm
+          <button className="modal-btn modal-btn-danger" onClick={handleConfirm}>
+            Подтвердить
           </button>
         </div>
       </div>

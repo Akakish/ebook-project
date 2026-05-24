@@ -198,3 +198,60 @@
     min-width: auto;
   }
 }
+/* ── Кнопка закладки ─────────────────────────── */
+.book-detail-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.book-detail-title-row h1 {
+  margin: 0;
+  flex: 1;
+}
+
+.bookmark-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-top: 4px;          /* выравнивание с заголовком */
+  background: none;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease,
+              background 0.2s ease, transform 0.15s ease;
+}
+
+.bookmark-btn:hover:not(:disabled) {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: rgba(139, 115, 85, 0.06);
+  transform: translateY(-1px);
+}
+
+.bookmark-btn--active {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: rgba(139, 115, 85, 0.08);
+}
+
+.bookmark-btn--active:hover:not(:disabled) {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.06);
+}
+
+.bookmark-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bookmark-btn:active:not(:disabled) {
+  transform: scale(0.92);
+}

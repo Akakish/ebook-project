@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { getCategories, createCategory, updateCategory, deleteCategory } from "../api/api.js";
+import { IconEdit, IconTrash, IconPlus } from "../Icons.jsx";
 import useNotify from "../Hooks/useNotify.js";
 import useConfirm from "../Hooks/useConfirm.js";
+import "../../Styles/CategoryPage.css";
+import "../../Styles/Modal.css";
 
 function CategoryModal({ onClose, onSaved, category }) {
   const isEdit = !!category;
@@ -34,25 +37,37 @@ function CategoryModal({ onClose, onSaved, category }) {
   };
 
   return (
-    <div onClick={(e) => e.target === e.currentTarget && onClose()}
-      style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.5)",
-               display:"flex", alignItems:"center", justifyContent:"center", zIndex:1000 }}>
-      <div style={{ background:"white", padding:24, borderRadius:10, minWidth:300 }}>
-        <h2>{isEdit ? "Edit Category" : "Add Category"}</h2>
+    <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>{isEdit ? "Edit Category" : "Add Category"}</h2>
+          <button className="modal-close" onClick={onClose}>×</button>
+        </div>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name</label>
-            <input value={form.name}
-              onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} required />
+          <div className="modal-body">
+            <div className="modal-form">
+              <div className="modal-form-group">
+                <label>Name</label>
+                <input
+                  value={form.name}
+                  onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
+                  required
+                />
+              </div>
+              <div className="modal-form-group">
+                <label>Description</label>
+                <textarea
+                  value={form.description}
+                  onChange={(e) => setForm(f => ({ ...f, description: e.target.value }))}
+                />
+              </div>
+            </div>
           </div>
-          <div>
-            <label>Description</label>
-            <textarea value={form.description}
-              onChange={(e) => setForm(f => ({ ...f, description: e.target.value }))} />
-          </div>
-          <div>
-            <button type="button" onClick={onClose}>Cancel</button>
-            <button type="submit" disabled={loading}>
+          <div className="modal-footer">
+            <button type="button" className="modal-btn modal-btn-secondary" onClick={onClose}>
+              Cancel
+            </button>
+            <button type="submit" className="modal-btn modal-btn-primary" disabled={loading}>
               {loading ? "Saving..." : isEdit ? "Update" : "Add"}
             </button>
           </div>
@@ -63,12 +78,12 @@ function CategoryModal({ onClose, onSaved, category }) {
 }
 
 export default function CategoryPage() {
-  const notify  = useNotify(); 
+  const notify  = useNotify();
   const confirm = useConfirm();
 
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading]       = useState(true);
-  const [showModal, setShowModal]   = useState(false);
+  const [categories, setCategories]     = useState([]);
+  const [loading, setLoading]           = useState(true);
+  const [showModal, setShowModal]       = useState(false);
   const [editCategory, setEditCategory] = useState(null);
 
   useEffect(() => { fetchCategories(); }, []);
@@ -91,11 +106,11 @@ export default function CategoryPage() {
   };
 
   const onDelete = (category) => {
-    confirm(`Are you sure you want to delete "${category.name}"?`, async () => {
+    confirm(`Delete "${category.name}"?`, async () => {
       try {
         await deleteCategory(category.id);
         await fetchCategories();
-        notify.success("Category deleted"); 
+        notify.success("Category deleted");
       } catch {
         notify.error("Failed to delete category");
       }
@@ -103,39 +118,56 @@ export default function CategoryPage() {
   };
 
   return (
-    <div>
-      <h2>Categories</h2>
-      <button onClick={() => { setEditCategory(null); setShowModal(true); }}>
-        Add Category
-      </button>
+    <div className="category-page">
+      <div className="category-container">
 
-      {showModal && (
-        <CategoryModal
-          category={editCategory}
-          onClose={() => { setShowModal(false); setEditCategory(null); }}
-          onSaved={fetchCategories}
-        />
-      )}
+        <div className="category-header">
+          <div className="category-header-row">
+            <h1>Categories</h1>
+            <button
+              className="add-category-btn"
+              onClick={() => { setEditCategory(null); setShowModal(true); }}
+            >
+              <IconPlus /> Add Category
+            </button>
+          </div>
+        </div>
 
-      {loading ? <p>Loading...</p> : categories.length === 0 ? (
-        <p>No categories yet.</p>
-      ) : (
-        <table>
-          <thead><tr><th>Name</th><th>Description</th><th>Actions</th></tr></thead>
-          <tbody>
+        {showModal && (
+          <CategoryModal
+            category={editCategory}
+            onClose={() => { setShowModal(false); setEditCategory(null); }}
+            onSaved={fetchCategories}
+          />
+        )}
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : categories.length === 0 ? (
+          <div className="category-empty">
+            <h2>No categories yet</h2>
+            <p>Add your first category to get started.</p>
+          </div>
+        ) : (
+          <div className="categories-list">
             {categories.map(cat => (
-              <tr key={cat.id}>
-                <td>{cat.name}</td>
-                <td>{cat.description || "-"}</td>
-                <td>
-                  <button onClick={() => onEdit(cat)}>Edit</button>
-                  <button onClick={() => onDelete(cat)}>Delete</button>
-                </td>
-              </tr>
+              <div className="category-item" key={cat.id}>
+                <div className="category-item-actions">
+                  <button className="cat-btn-edit" onClick={() => onEdit(cat)} title="Edit">
+                    <IconEdit />
+                  </button>
+                  <button className="cat-btn-delete" onClick={() => onDelete(cat)} title="Delete">
+                    <IconTrash />
+                  </button>
+                </div>
+                <h3>{cat.name}</h3>
+                <p>{cat.description || "No description"}</p>
+              </div>
             ))}
-          </tbody>
-        </table>
-      )}
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }

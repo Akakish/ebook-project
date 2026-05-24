@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getBook, getBookmarks, createBookmark, deleteBookmark, updateBookmark } from "../api/api.js";
+import { useSelector } from "react-redux";
+import { getBook, getBookmarks, createBookmark, deleteBookmark } from "../api/api.js";
 import { IconBookmark } from "../Icons.jsx";
 import "../../Styles/BookDetailPage.css";
 import useNotify from "../Hooks/useNotify.js";
-import useConfirm from "../Hooks/useConfirm.js";
 
 export default function BookDetailPage() {
   const { id } = useParams();
   const user = useSelector(s => s.auth.user);
-  const dispatch = useDispatch();
   const notify = useNotify();
-  const confirm = useConfirm();
-  
+
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,9 +19,7 @@ export default function BookDetailPage() {
 
   useEffect(() => {
     fetchBook();
-    if (user) {
-      checkBookmark();
-    }
+    if (user) checkBookmark();
   }, [id, user]);
 
   const fetchBook = async () => {
@@ -32,7 +27,7 @@ export default function BookDetailPage() {
     try {
       const { data } = await getBook(id);
       setBook(data);
-    } catch (err) {
+    } catch {
       setError("Failed to load book details");
     } finally {
       setLoading(false);
@@ -40,12 +35,11 @@ export default function BookDetailPage() {
   };
 
   const checkBookmark = async () => {
-    if (!user) return;
     try {
       const { data } = await getBookmarks();
       const found = data.find(b => b.book === id && b.user === user.id);
       setBookmark(found || null);
-    } catch (err) {
+    } catch {
       console.error("Failed to check bookmark");
     }
   };
@@ -55,7 +49,6 @@ export default function BookDetailPage() {
       notify.error("Please log in first");
       return;
     }
-    
     setBookmarkLoading(true);
     try {
       if (bookmark) {
@@ -67,7 +60,7 @@ export default function BookDetailPage() {
         await checkBookmark();
         notify.success("Added to bookmarks!");
       }
-    } catch (err) {
+    } catch {
       notify.error("Failed to update bookmark");
     } finally {
       setBookmarkLoading(false);
@@ -75,8 +68,8 @@ export default function BookDetailPage() {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-  if (!book) return <p>Book not found</p>;
+  if (error)   return <p>{error}</p>;
+  if (!book)   return <p>Book not found</p>;
 
   return (
     <div className="book-detail">
@@ -87,28 +80,30 @@ export default function BookDetailPage() {
           alt={book.title}
           onError={(e) => { e.target.src = "https://img.wattpad.com/cover/387707177-512-k61057.jpg"; }}
         />
-        
+
         <div className="book-detail-info">
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
-            <h1 style={{ margin: 0 }}>{book.title}</h1>
-            <button 
-              className="bookmark-heart"
+          <div className="book-detail-title-row">
+            <h1>{book.title}</h1>
+            <button
+              className={`bookmark-btn${bookmark ? " bookmark-btn--active" : ""}`}
               onClick={handleBookmark}
               disabled={bookmarkLoading}
-              style={{ fontSize: "2rem", cursor: "pointer", background: "none", border: "none" }}
               title={bookmark ? "Remove from bookmarks" : "Add to bookmarks"}
+              aria-label={bookmark ? "Remove from bookmarks" : "Add to bookmarks"}
             >
-              {bookmark ? "❤️" : "🤍"}
+              <IconBookmark filled={!!bookmark} size={22} />
             </button>
           </div>
+
           <p><strong>Author:</strong> {book.author}</p>
           <p><strong>Genres:</strong> {book.genres}</p>
           <p><strong>Published Date:</strong> {book.published_date}</p>
-          <p><strong>Pages:</strong> {book.pages}я</p>
+          <p><strong>Pages:</strong> {book.pages}</p>
           <p><strong>Price:</strong> ${book.price}</p>
-          <p><strong>Category:</strong> {book.category ? book.category.name : "Другое"}</p>
+          <p><strong>Category:</strong> {book.category ? book.category.name : "Other"}</p>
         </div>
       </div>
+
       <div className="book-detail-description">
         <h2>Description</h2>
         <p>{book.description || "No description available."}</p>

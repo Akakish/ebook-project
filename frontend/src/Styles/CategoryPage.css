@@ -240,3 +240,81 @@
   }
 }
 
+/* Шапка с кнопкой */
+.category-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--text);
+}
+
+.add-category-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.add-category-btn:hover {
+  background-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Кнопки редактирования/удаления на карточке */
+.category-item {
+  position: relative;
+}
+
+.category-item-actions {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.4rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.category-item:hover .category-item-actions {
+  opacity: 1;
+}
+
+.cat-btn-edit,
+.cat-btn-delete {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.cat-btn-edit  { color: #3498db; }
+.cat-btn-delete { color: #e74c3c; }
+
+.cat-btn-edit:hover,
+.cat-btn-delete:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: white;
+}

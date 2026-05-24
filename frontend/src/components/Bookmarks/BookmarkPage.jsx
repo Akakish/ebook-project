@@ -89,7 +89,7 @@ function BookmarksPage() {
                   <h3>{book?.title || "Unknown"}</h3>
                   <p className="bookmark-author">{book?.author}</p>
                   <p className="bookmark-description">{book?.description}</p>
-                  <div className="bookmark-rating">{book?.rating || "N/A"} ⭐</div>
+                  <div className="bookmark-rating">{book?.category?.name || "Other"}</div>
                   <select 
                     className="bookmark-status"
                     value={bm.status} 

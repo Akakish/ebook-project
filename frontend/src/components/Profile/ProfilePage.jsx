@@ -5,9 +5,9 @@ import ProfileModal from "./ProfileModal.jsx";
 import { deleteUser } from "../api/api.js";
 import useNotify from "../Hooks/useNotify.js";
 import useConfirm from "../Hooks/useConfirm.js";
-
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Redux/authReducer.js";
+import "../../Styles/ProfilePage.css";
 
 function ProfilePage() {
   const user = useSelector(s => s.auth.user);
@@ -17,7 +17,7 @@ function ProfilePage() {
   const confirm = useConfirm();
   const [showEdit, setShowEdit] = useState(false);
 
-  const HandleDeleteUser = () => {
+  const handleDeleteUser = () => {
     confirm("Are you sure you want to delete your account?", async () => {
       try {
         await deleteUser(user.id);
@@ -38,18 +38,41 @@ function ProfilePage() {
           onSaved={() => { setShowEdit(false); notify.success("Profile updated!"); }}
         />
       )}
+
       <div className="profile-card">
         <div className="profile-avatar">{user?.username?.slice(0, 2).toUpperCase()}</div>
         <div className="profile-info">
-          <div>{user?.username}</div>
-          <div>{user?.email || "No email set"}</div>
-          <div>Role: <b>{user?.role}</b></div>
+          <div className="profile-info-item">
+            <span className="profile-info-label">Username</span>
+            <span className="profile-info-value">{user?.username}</span>
+          </div>
+          <div className="profile-info-item">
+            <span className="profile-info-label">Email</span>
+            <span className="profile-info-value">{user?.email || ""}</span>
+          </div>
+          <div className="profile-info-item">
+            <span className="profile-info-label">Role</span>
+            <span className="profile-info-value">{user?.role}</span>
+          </div>
         </div>
       </div>
+
       <div className="profile-buttons">
-        <button onClick={() => setShowEdit(true)}><IconEdit /> Edit Profile</button>
-        <button onClick={() => { confirm("Are you sure you want to sign out?", () => { dispatch(logout()); navigate("/auth"); }); }}><IconLogOut /> Sign out</button>
-        <button onClick={HandleDeleteUser}><IconTrash /> Delete Account</button>
+        <button className="profile-btn" onClick={() => setShowEdit(true)}>
+          <IconEdit /> Edit Profile
+        </button>
+        <button
+          className="profile-btn"
+          onClick={() => confirm("Are you sure you want to sign out?", () => {
+            dispatch(logout());
+            navigate("/auth");
+          })}
+        >
+          <IconLogOut /> Sign out
+        </button>
+        <button className="profile-btn danger" onClick={handleDeleteUser}>
+          <IconTrash /> Delete Account
+        </button>
       </div>
     </div>
   );

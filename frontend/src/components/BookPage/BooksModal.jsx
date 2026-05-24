@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createBook, updateBook, getCategories } from "../api/api.js";
+import "../../Styles/Modal.css";
 
 export default function BooksModal({ onClose, onSaved, book }) {
   const isEdit = !!book;
@@ -21,9 +22,7 @@ export default function BooksModal({ onClose, onSaved, book }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  useEffect(() => { fetchCategories(); }, []);
 
   const fetchCategories = async () => {
     try {
@@ -65,57 +64,81 @@ export default function BooksModal({ onClose, onSaved, book }) {
   };
 
   return (
-    <div
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-      style={{
-        position: "fixed", inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        display: "flex", 
-        alignItems: "center", 
-        justifyContent: "center",
-        zIndex: 1000,
-      }}>
-      <div style={{ background: "white", padding: 24, borderRadius: 10, minWidth: 340 }}>
-        <h2>{isEdit ? "Edit Book" : "Add Book"}</h2>
-
-        {error && <div style={{ color: "red" }}>{error}</div>}
-
-        <div><label>Cover Image</label>
-          <input type="file" onChange={e => setImageFile(e.target.files[0])} />
-        </div>
-        <div><label>Title</label>
-          <input name="title" value={form.title} onChange={handleChange} />
-        </div>
-        <div><label>Author</label>
-          <input name="author" value={form.author} onChange={handleChange} />
-        </div>
-        <div><label>Genres</label>
-          <input name="genres" value={form.genres} onChange={handleChange} />
-        </div>
-        <div><label>Published Date</label>
-          <input type="date" name="published_date" value={form.published_date} onChange={handleChange} />
-        </div>
-        <div><label>Pages</label>
-          <input type="number" name="pages" value={form.pages} onChange={handleChange} />
-        </div>
-        <div><label>Price</label>
-          <input type="number" step="0.01" name="price" value={form.price} onChange={handleChange} />
-        </div>
-        <div><label>Description</label>
-          <textarea name="description" value={form.description} onChange={handleChange} />
-        </div>
-        <div><label>Category</label>
-          <select name="category" value={form.category} onChange={handleChange}>
-            <option value="">Другое</option>
-            {categories.map(cat => (
-              <option key={cat.id} value={String(cat.id)}>{cat.name}</option>
-            ))}
-          </select>
+    <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="modal-content modal-wide">
+        <div className="modal-header">
+          <h2>{isEdit ? "Edit Book" : "Add Book"}</h2>
+          <button className="modal-close" onClick={onClose}>×</button>
         </div>
 
-        <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
-          <button type="button" onClick={onClose}>Cancel</button>
-          <button type="button" onClick={handleSubmit} disabled={loading}>
+        <div className="modal-body">
+          {error && <div className="modal-error">{error}</div>}
+
+          <div className="modal-form">
+            <div className="modal-form-group">
+              <label>Cover Image</label>
+              <input
+                type="file"
+                className="modal-file-input"
+                onChange={e => setImageFile(e.target.files[0])}
+              />
+            </div>
+
+            <div className="modal-form-row">
+              <div className="modal-form-group">
+                <label>Title</label>
+                <input name="title" value={form.title} onChange={handleChange} />
+              </div>
+              <div className="modal-form-group">
+                <label>Author</label>
+                <input name="author" value={form.author} onChange={handleChange} />
+              </div>
+            </div>
+
+            <div className="modal-form-row">
+              <div className="modal-form-group">
+                <label>Genres</label>
+                <input name="genres" value={form.genres} onChange={handleChange} />
+              </div>
+              <div className="modal-form-group">
+                <label>Category</label>
+                <select name="category" value={form.category} onChange={handleChange}>
+                  <option value="">Other</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={String(cat.id)}>{cat.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="modal-form-row">
+              <div className="modal-form-group">
+                <label>Published Date</label>
+                <input type="date" name="published_date" value={form.published_date} onChange={handleChange} />
+              </div>
+              <div className="modal-form-group">
+                <label>Pages</label>
+                <input type="number" name="pages" value={form.pages} onChange={handleChange} />
+              </div>
+            </div>
+
+            <div className="modal-form-group">
+              <label>Price</label>
+              <input type="number" step="0.01" name="price" value={form.price} onChange={handleChange} />
+            </div>
+
+            <div className="modal-form-group">
+              <label>Description</label>
+              <textarea name="description" value={form.description} onChange={handleChange} />
+            </div>
+          </div>
+        </div>
+
+        <div className="modal-footer">
+          <button type="button" className="modal-btn modal-btn-secondary" onClick={onClose}>
+            Cancel
+          </button>
+          <button type="button" className="modal-btn modal-btn-primary" onClick={handleSubmit} disabled={loading}>
             {loading ? "Saving..." : isEdit ? "Update" : "Add"}
           </button>
         </div>
