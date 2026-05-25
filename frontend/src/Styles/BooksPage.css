@@ -86,23 +86,6 @@
   box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
 }
 
-.filter-reset {
-  padding: 0.6rem 1rem;
-  background-color: transparent;
-  color: var(--primary);
-  border: 1px solid var(--primary);
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.filter-reset:hover {
-  background-color: var(--primary);
-  color: white;
-}
-
 .books-container {
   max-width: 1400px;
   margin: 0 auto;
