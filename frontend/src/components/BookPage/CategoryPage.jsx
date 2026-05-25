@@ -41,7 +41,6 @@ function CategoryModal({ onClose, onSaved, category }) {
       <div className="modal-content">
         <div className="modal-header">
           <h2>{isEdit ? "Edit Category" : "Add Category"}</h2>
-          <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="modal-body">

@@ -37,7 +37,6 @@ export default function ProfileModal({ user, onClose, onSaved }) {
       <div className="modal-content">
         <div className="modal-header">
           <h2>Edit Profile</h2>
-          <button className="modal-close" onClick={onClose}>×</button>
         </div>
 
         <form onSubmit={handleSubmit}>

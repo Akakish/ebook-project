@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../Redux/modalReducer.js";
+import { IconAlert } from "./Icons.jsx";
 import "../Styles/Modal.css";
 
 export default function ConfirmModal() {
@@ -25,7 +26,7 @@ export default function ConfirmModal() {
     <div className="modal-overlay confirm-modal">
       <div className="modal-content">
         <div className="modal-body">
-          <span className="confirm-icon warning">⚠️</span>
+          <div className="confirm-icon warning"><IconAlert /></div>
           <p className="confirm-message">{message}</p>
         </div>
         <div className="modal-footer">

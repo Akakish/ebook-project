@@ -29,7 +29,6 @@ function BookmarkModal({ userId, books, onClose, onSaved }) {
       <div className="modal-content">
         <div className="modal-header">
           <h2>Add Bookmark</h2>
-          <button className="modal-close" onClick={onClose}>×</button>
         </div>
 
         <div className="modal-body">

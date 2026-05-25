@@ -68,7 +68,6 @@ export default function BooksModal({ onClose, onSaved, book }) {
       <div className="modal-content modal-wide">
         <div className="modal-header">
           <h2>{isEdit ? "Edit Book" : "Add Book"}</h2>
-          <button className="modal-close" onClick={onClose}>×</button>
         </div>
 
         <div className="modal-body">
